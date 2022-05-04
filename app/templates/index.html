@@ -1,0 +1,204 @@
+{% extends 'base.html'%}
+    {% import 'macros.html' as macro%}
+
+    {% if title %}
+        <title> {{ title }}</title>
+    {% else %}
+        <title> World Connect ... </title>
+    {% endif %}
+
+    {% block styles %}
+        {{ super() }}
+        <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+    {% endblock %}
+
+    {% block content %}
+
+ <!--NavBar-->
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand font-weight-bold" style="font-size: large;" href="/">Realtime News</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" style="font-size: large;" href="index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" style="font-size: large;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Topics
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/categories/general">General</a>
+                <a class="dropdown-item" href="/categories/business">Business</a>
+                <a class="dropdown-item" href="/categories/health">Health</a>
+                <a class="dropdown-item" href="/categories/science">Science</a>
+                <a class="dropdown-item" href="/categories/entertainment">Entertainment</a>
+                <a class="dropdown-item" href="/categories/sports">Sports</a>
+                <a class="dropdown-item" href="/categories/technology">Technology</a>
+              </div>
+            </li>
+           </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Enter key words..." aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search{{source_title}}</button>
+          </form>
+        </div>
+    </nav>
+</div>
+
+ <!-- Breaking News carousel-->
+    <div class="p-3 mb-2 bg-secondary text-dark">
+        <div class="col-xs-12 col-md-6">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h1>Breaking News!</h1>
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">                            
+                            <div class="carousel-inner">
+                              <div class="item active">
+                                <img src="{{breaking_news[0].url_to_image}}" alt="..." onerror="imgError(this);">
+                                <div class="carousel-caption font-weight-bolder">
+                                    <p><a href="{{breaking_news[0].url}}" target="_blank">{{breaking_news[0].title}}</a></p>                                                                      
+                                </div>
+                              </div>
+
+                              {{ macro.displayCarousel(breaking_news) }}
+                              
+                            </div>
+                                                                                                    
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                              <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                              <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div> 
+                        <!-- Carousel -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+     <!-- Media Outlets-->
+        <div class="container">
+            <div class=" row display-flex-end">
+                <div class="col-xs-12 text-monospace">
+                    <h1 class="font-weight-bold">Media Houses</h1>
+                </div>
+               <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img  class="card-img-top" src="{{cnn[0].url_to_image}}"  alt="CNN">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/cnn">{{cnn[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{cnn[0].url}}" target="_blank">{{cnn[0].title}}</a></p>
+                    </div>
+                 </div>
+               </div>
+               <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{bbc[0].url_to_image}}" alt="BBC">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/bbc-news">{{bbc[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{bbc[0].url}}" target="_blank">{{bbc[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{al[0].url_to_image}}" alt="Al Jazeera">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/al-jazeera-english">{{al[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{al[0].url}}" target="_blank">{{al[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{cbs[0].url_to_image}}" alt="CBS">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/cbs-news">{{cbs[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{cbs[0].url}}" target="_blank">{{cbs[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{politico[0].url_to_image}}" alt="Politico">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/politico">{{politico[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{politico[0].url}}" target="_blank">{{politico[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{usa_today[0].url_to_image}}" alt="USA Today">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/usa-today">{{usa_today[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{usa_today[0].url}}" target="_blank">{{usa_today[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{newsweek[0].url_to_image}}" alt="NewsWeek">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/newsweek">{{newsweek[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{newsweek[0].url}}" target="_blank">{{newsweek[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{fox[0].url_to_image}}" alt="Fox News">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/fox-news">{{fox[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{fox[0].url}}" target="_blank">{{fox[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+               <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{time[0].url_to_image}}" alt="Time">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/time">{{time[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{time[0].url}}" target="_blank">{{time[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4"> 
+                 <div class="card">
+                    <img class="card-img-top" src="{{nbc[0].url_to_image}}" alt="NBC News">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/nbc-news">{{nbc[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{nbc[0].url}}" target="_blank">{{nbc[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{reuters[0].url_to_image}}" alt="Reuters">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold "><a href="/source/reuters">{{reuters[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{reuters[0].url}}" target="_blank">{{reuters[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                 <div class="card">
+                    <img class="card-img-top" src="{{msnbc[0].url_to_image}}" alt="MSNBC">
+                    <div class="card-body">
+                      <h5 class="card-title font-weight-bold"><a href="/source/msnbc">{{msnbc[0].source_name}}</a></h5>
+                      <p class="card-text font-weight-italic"><a href="{{msnbc[0].url}}" target="_blank">{{msnbc[0].title}}</a></p>                              
+                    </div>
+                 </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
